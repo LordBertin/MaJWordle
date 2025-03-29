@@ -18,7 +18,7 @@
       text-align: center;
       margin: 10px;
     }
-    /* Instructions au-dessus de la grille */
+    /* Bloc d'instructions au-dessus de la grille */
     #instructions {
       text-align: center;
       margin-bottom: 10px;
@@ -36,17 +36,19 @@
     #instructions .legend.green { background-color: Chartreuse; }
     #instructions .legend.yellow { background-color: Khaki; }
     #instructions .legend.gray { background-color: LightGray; }
-    /* Score box et timer */
+    /* Score box et timer centrés */
     #score-box, #timer-box {
       margin-bottom: 10px;
       font-size: 18px;
       font-weight: bold;
+      text-align: center;
     }
-    /* Conteneur de la grille */
+    /* Conteneur de la grille centré */
     #board-container {
       position: relative;
       width: 100%;
       max-width: 500px;
+      margin: 0 auto;
     }
     #board {
       display: flex;
@@ -98,14 +100,15 @@
       color: white;
       border: none;
     }
-    /* Clavier virtuel */
+    /* Clavier virtuel centré */
     #virtual-keyboard {
       width: 100%;
       max-width: 500px;
       background-color: rgba(255, 255, 255, 0.8);
       padding: 10px;
       border-radius: 8px;
-      margin-top: 10px;
+      margin: 10px auto;
+      text-align: center;
     }
     .keyboard-row {
       display: flex;
@@ -210,7 +213,7 @@
   <div id="game-screen" class="screen">
     <!-- En mode thème, le titre inclura le nom du thème -->
     <h2 id="game-title"></h2>
-    <!-- Nouveau bloc d'instructions au-dessus de la grille -->
+    <!-- Bloc d'instructions -->
     <div id="instructions">
       <p style="font-size: 16px;">Tu n'as que 5 essais, alors réfléchis bien</p>
       <div>
@@ -218,10 +221,9 @@
         <span class="legend yellow"><strong>Lettre mal placée</strong></span>
         <span class="legend gray"><strong>Lettre absente</strong></span>
       </div>
-      <p>Meilleur série : | Série actuelle :</p>
     </div>
     <div id="score-box">Meilleur série : 0 | Série actuelle : 0</div>
-    <div id="timer-box"></div>
+    <div id="timer-box">Temps restant : 05:00</div>
     <div id="board-container">
       <div id="board"></div>
     </div>
@@ -736,6 +738,7 @@
       })) {
         const section = document.createElement("div");
         section.style.marginBottom = "15px";
+        // Centrer l'intitulé du thème
         section.innerHTML = `<h3>${theme}</h3>`;
         verbs.forEach(v => {
           const data = verbData[v];
