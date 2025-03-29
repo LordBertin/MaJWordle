@@ -18,12 +18,25 @@
       text-align: center;
       margin: 10px;
     }
-    .legend {
+    /* Instructions au-dessus de la grille */
+    #instructions {
       text-align: center;
-      margin: 3px;
-      padding: 3px;
-      font-weight: bold;
+      margin-bottom: 10px;
     }
+    #instructions p {
+      margin: 5px 0;
+    }
+    #instructions .legend {
+      display: inline-block;
+      padding: 4px 8px;
+      margin: 0 5px;
+      font-weight: bold;
+      border-radius: 4px;
+    }
+    #instructions .legend.green { background-color: Chartreuse; }
+    #instructions .legend.yellow { background-color: Khaki; }
+    #instructions .legend.gray { background-color: LightGray; }
+    /* Score box et timer */
     #score-box, #timer-box {
       margin-bottom: 10px;
       font-size: 18px;
@@ -197,6 +210,16 @@
   <div id="game-screen" class="screen">
     <!-- En mode thème, le titre inclura le nom du thème -->
     <h2 id="game-title"></h2>
+    <!-- Nouveau bloc d'instructions au-dessus de la grille -->
+    <div id="instructions">
+      <p style="font-size: 16px;">Tu n'as que 5 essais, alors réfléchis bien</p>
+      <div>
+        <span class="legend green"><strong>Lettre bien placée</strong></span>
+        <span class="legend yellow"><strong>Lettre mal placée</strong></span>
+        <span class="legend gray"><strong>Lettre absente</strong></span>
+      </div>
+      <p>Meilleur série : | Série actuelle :</p>
+    </div>
     <div id="score-box">Meilleur série : 0 | Série actuelle : 0</div>
     <div id="timer-box"></div>
     <div id="board-container">
@@ -713,7 +736,6 @@
       })) {
         const section = document.createElement("div");
         section.style.marginBottom = "15px";
-        // Centrer l'intitulé du thème
         section.innerHTML = `<h3>${theme}</h3>`;
         verbs.forEach(v => {
           const data = verbData[v];
