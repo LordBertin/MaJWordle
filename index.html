@@ -36,7 +36,7 @@
     #instructions .legend.green { background-color: Chartreuse; }
     #instructions .legend.yellow { background-color: Khaki; }
     #instructions .legend.gray { background-color: LightGray; }
-    /* Score box et timer centrés */
+    /* Score et timer centrés */
     #score-box, #timer-box {
       margin-bottom: 10px;
       font-size: 18px;
@@ -223,6 +223,7 @@
       </div>
     </div>
     <div id="score-box">Meilleur série : 0 | Série actuelle : 0</div>
+    <!-- Le timer ne s'affiche qu'en mode Chronométré -->
     <div id="timer-box">Temps restant : 05:00</div>
     <div id="board-container">
       <div id="board"></div>
@@ -572,6 +573,10 @@
       const data = verbData[currentChosenVerb];
       let content = "";
       let title = isWin ? "Well Done !" : "Oh Nooo !";
+      // Choix de l'image selon le résultat
+      const imgUrl = isWin 
+        ? "https://i.ibb.co/5gNjxgKw/db24c795-e74a-4c0d-96f3-a2bab7b35c13-d449fd80-704c-4d7a-94b3-946fe063bc25-v1.png" 
+        : "https://i.ibb.co/8DGLL7bT/No.png";
       if (!data) {
         content = "<p>Données non disponibles pour ce verbe.</p>";
       } else {
@@ -587,8 +592,16 @@
         infoContainer.remove();
         initGame();
       });
-      infoContainer.innerHTML = `<h3 style="text-align:center;">${title}</h3>
-                                 <div style="text-align:center;">${content}</div>`;
+      infoContainer.innerHTML = `
+        <div style="display: flex; align-items: center; justify-content: center;">
+          <div style="flex: 1; text-align: center;">
+            <h3>${title}</h3>
+            ${content}
+          </div>
+          <div>
+            <img src="${imgUrl}" style="width:85px; margin-left:10px;">
+          </div>
+        </div>`;
       infoContainer.appendChild(modalButton);
       document.body.appendChild(infoContainer);
       const endSound = new Audio(isWin ? "success.mp3" : "fail.mp3");
@@ -671,6 +684,8 @@
     function startClassicGame() {
       currentMode = "classic";
       document.getElementById("game-title").textContent = "Mode Classique";
+      // En mode classique, masquer le timer
+      timerBox.style.display = "none";
       currentVerbs = classicVerbs;
       initGame();
       createKeyboard();
@@ -680,6 +695,8 @@
     function startChronoGame() {
       currentMode = "chrono";
       document.getElementById("game-title").textContent = "Mode Chronométré";
+      // En mode chronométré, afficher le timer
+      timerBox.style.display = "block";
       currentVerbs = classicVerbs;
       initGame();
       createKeyboard();
@@ -713,6 +730,8 @@
         alert("Aucun verbe pour ce thème.");
         return;
       }
+      // Pour les thèmes, si le mode n'est pas chronométré, on masque le timer
+      timerBox.style.display = "none";
       initGame();
       createKeyboard();
       showScreen("game-screen");
